@@ -1,0 +1,58 @@
+{
+  "placeholderImages": [
+    {
+      "id": "poster-1",
+      "description": "Poster for Inception",
+      "imageUrl": "https://picsum.photos/seed/1/500/750",
+      "imageHint": "sci-fi movie"
+    },
+    {
+      "id": "poster-2",
+      "description": "Poster for The Matrix",
+      "imageUrl": "https://picsum.photos/seed/2/500/750",
+      "imageHint": "action movie"
+    },
+    {
+      "id": "poster-3",
+      "description": "Poster for Interstellar",
+      "imageUrl": "https://picsum.photos/seed/3/500/750",
+      "imageHint": "space movie"
+    },
+    {
+      "id": "poster-4",
+      "description": "Poster for Breaking Bad",
+      "imageUrl": "https://picsum.photos/seed/4/500/750",
+      "imageHint": "drama series"
+    },
+    {
+      "id": "poster-5",
+      "description": "Poster for Stranger Things",
+      "imageUrl": "https://picsum.photos/seed/5/500/750",
+      "imageHint": "horror series"
+    },
+    {
+      "id": "poster-6",
+      "description": "Poster for Pulp Fiction",
+      "imageUrl": "https://picsum.photos/seed/6/500/750",
+      "imageHint": "crime movie"
+    },
+    {
+      "id": "poster-7",
+      "description": "Poster for The Godfather",
+      "imageUrl": "https://picsum.photos/seed/7/500/750",
+      "imageHint": "mafia movie"
+    },
+    {
+      "id": "poster-8",
+      "description": "Poster for Game of Thrones",
+      "imageUrl": "https://picsum.photos/seed/8/500/750",
+      "imageHint": "fantasy series"
+    },
+    {
+      "id": "poster-9",
+      "description": "Poster for Parasite",
+      "imageUrl": "https://picsum.photos/seed/9/500/750",
+      "imageHint": "thriller movie"
+    }
+  ]
+}
