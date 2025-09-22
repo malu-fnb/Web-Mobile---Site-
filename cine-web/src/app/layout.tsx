@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: 'CINEWEB',
   description: 'Seu universo pessoal de filmes e séries.',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/teste.png',
   },
 };
 
