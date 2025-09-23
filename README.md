@@ -1,4 +1,10 @@
-# 🌐 Web-Mobile — Site  
+# 🌐 Web-Mobile — Site 
+## 🚀 Integrantes: 
+- Malu de Faria Neves Bezerra
+- Vinicius Anderson Cavalcanti Silva
+- Pedro Victor Gomes de Araújo
+- Leandro Lima da Silva
+
 
 Um site responsivo para **Web e Mobile**, feito com **Next.js + TypeScript**, focado em **usabilidade**, **design moderno** e **boa performance**.  
 
