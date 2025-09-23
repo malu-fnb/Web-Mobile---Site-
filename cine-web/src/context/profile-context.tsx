@@ -1,8 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
 import type { Media, SavedMedia } from '@/lib/types';
-import { mockSavedItems } from '@/lib/data';
 
 interface ProfileContextType {
   savedItems: SavedMedia[];
@@ -10,63 +9,115 @@ interface ProfileContextType {
   dislikedItems: Media[];
   addSavedItem: (item: Media) => void;
   updateSavedItem: (item: SavedMedia) => void;
-  removeSavedItem: (id: string) => void;
+  removeSavedItem: (tmdbId: string) => void;
   addLikedItem: (item: Media) => void;
-  removeLikedItem: (id: string) => void;
+  removeLikedItem: (tmdbId: string) => void;
   addDislikedItem: (item: Media) => void;
-  removeDislikedItem: (id: string) => void;
-  isSaved: (id: string) => boolean;
-  isLiked: (id: string) => boolean;
-  isDisliked: (id: string) => boolean;
+  removeDislikedItem: (tmdbId: string) => void;
+  isSaved: (tmdbId: string) => boolean;
+  isLiked: (tmdbId: string) => boolean;
+  isDisliked: (tmdbId: string) => boolean;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
+// Helper function to get items from localStorage
+const getStorageItem = <T,>(key: string, fallback: T): T => {
+  if (typeof window === 'undefined') {
+    return fallback;
+  }
+  try {
+    const item = window.localStorage.getItem(key);
+    return item ? JSON.parse(item) : fallback;
+  } catch (error) {
+    console.error(`Error reading localStorage key “${key}”:`, error);
+    return fallback;
+  }
+};
+
+// Helper function to set items in localStorage
+const setStorageItem = <T,>(key: string, value: T) => {
+  try {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    }
+  } catch (error) {
+    console.error(`Error setting localStorage key “${key}”:`, error);
+  }
+};
+
 export function ProfileProvider({ children }: { children: ReactNode }) {
-  const [savedItems, setSavedItems] = useState<SavedMedia[]>(mockSavedItems);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [savedItems, setSavedItems] = useState<SavedMedia[]>([]);
   const [likedItems, setLikedItems] = useState<Media[]>([]);
   const [dislikedItems, setDislikedItems] = useState<Media[]>([]);
 
-  const addSavedItem = (item: Media) => {
-    if (savedItems.some((i) => i.id === item.id)) return;
-    const newSavedItem: SavedMedia = {
-      ...item,
-      status: 'pending',
-      userRating: null,
-      notes: null,
-    };
-    setSavedItems((prev) => [newSavedItem, ...prev]);
-  };
+  useEffect(() => {
+    setSavedItems(getStorageItem('savedItems', []));
+    setLikedItems(getStorageItem('likedItems', []));
+    setDislikedItems(getStorageItem('dislikedItems', []));
+    setIsInitialized(true);
+  }, []);
 
-  const updateSavedItem = (item: SavedMedia) => {
-    setSavedItems((prev) => prev.map((i) => (i.id === item.id ? item : i)));
-  };
+  useEffect(() => {
+    if (isInitialized) {
+      setStorageItem('savedItems', savedItems);
+    }
+  }, [savedItems, isInitialized]);
 
-  const removeSavedItem = (id: string) => {
-    setSavedItems((prev) => prev.filter((i) => i.id !== id));
-  };
-  
-  const addLikedItem = (item: Media) => {
-    if (likedItems.some((i) => i.id === item.id)) return;
-    setLikedItems((prev) => [item, ...prev]);
-  };
+  useEffect(() => {
+    if (isInitialized) {
+      setStorageItem('likedItems', likedItems);
+    }
+  }, [likedItems, isInitialized]);
 
-  const removeLikedItem = (id: string) => {
-    setLikedItems((prev) => prev.filter((i) => i.id !== id));
-  };
+  useEffect(() => {
+    if (isInitialized) {
+      setStorageItem('dislikedItems', dislikedItems);
+    }
+  }, [dislikedItems, isInitialized]);
 
-  const addDislikedItem = (item: Media) => {
-    if (dislikedItems.some((i) => i.id === item.id)) return;
-    setDislikedItems((prev) => [item, ...prev]);
-  };
-    
-  const removeDislikedItem = (id: string) => {
-    setDislikedItems((prev) => prev.filter((i) => i.id !== id));
-  };
+  const addSavedItem = useCallback((item: Media) => {
+    setSavedItems((prev) => {
+      if (prev.some((i) => i.tmdbId === item.tmdbId)) return prev;
+      const newSavedItem: SavedMedia = { ...item, status: 'pending', userRating: null, notes: null };
+      return [newSavedItem, ...prev];
+    });
+  }, []);
 
-  const isSaved = (id: string) => savedItems.some((i) => i.id === id);
-  const isLiked = (id: string) => likedItems.some((i) => i.id === id);
-  const isDisliked = (id: string) => dislikedItems.some((i) => i.id === id);
+  const updateSavedItem = useCallback((item: SavedMedia) => {
+    setSavedItems((prev) => prev.map((i) => (i.tmdbId === item.tmdbId ? item : i)));
+  }, []);
+
+  const removeSavedItem = useCallback((tmdbId: string) => {
+    setSavedItems((prev) => prev.filter((i) => i.tmdbId !== tmdbId));
+  }, []);
+
+  const addLikedItem = useCallback((item: Media) => {
+    setLikedItems((prev) => {
+      if (prev.some((i) => i.tmdbId === item.tmdbId)) return prev;
+      return [item, ...prev];
+    });
+  }, []);
+
+  const removeLikedItem = useCallback((tmdbId: string) => {
+    setLikedItems((prev) => prev.filter((i) => i.tmdbId !== tmdbId));
+  }, []);
+
+  const addDislikedItem = useCallback((item: Media) => {
+    setDislikedItems((prev) => {
+      if (prev.some((i) => i.tmdbId === item.tmdbId)) return prev;
+      return [item, ...prev];
+    });
+  }, []);
+
+  const removeDislikedItem = useCallback((tmdbId: string) => {
+    setDislikedItems((prev) => prev.filter((i) => i.tmdbId !== tmdbId));
+  }, []);
+
+  const isSaved = (tmdbId: string) => savedItems.some((i) => i.tmdbId === tmdbId);
+  const isLiked = (tmdbId: string) => likedItems.some((i) => i.tmdbId === tmdbId);
+  const isDisliked = (tmdbId: string) => dislikedItems.some((i) => i.tmdbId === tmdbId);
 
   return (
     <ProfileContext.Provider

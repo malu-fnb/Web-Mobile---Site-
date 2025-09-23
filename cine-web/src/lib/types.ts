@@ -1,7 +1,7 @@
 export type MediaType = 'movie' | 'tv';
 
 export interface Media {
-  id: string;
+  id?: string; // Alterado para opcional, pois virá do DB
   tmdbId: string;
   title: string;
   year: string;

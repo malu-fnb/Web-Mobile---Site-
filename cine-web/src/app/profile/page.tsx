@@ -27,8 +27,8 @@ function SavedItemsList() {
   const { savedItems, updateSavedItem, removeSavedItem } = useProfile();
   const [editingItem, setEditingItem] = useState<SavedMedia | null>(null);
 
-  const handleUpdateStatus = (id: string) => {
-    const item = savedItems.find((i) => i.id === id);
+  const handleUpdateStatus = (tmdbId: string) => {
+    const item = savedItems.find((i) => i.tmdbId === tmdbId);
     if (item) {
       updateSavedItem({
         ...item,
@@ -54,7 +54,7 @@ function SavedItemsList() {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         {savedItems.map((item) => (
-          <Card key={item.id} className="flex flex-col">
+          <Card key={item.tmdbId} className="flex flex-col">
             <CardHeader className="flex-row gap-4 items-start p-4">
               <Image
                 src={item.posterUrl}
@@ -62,7 +62,6 @@ function SavedItemsList() {
                 width={100}
                 height={150}
                 className="rounded-md object-cover"
-                data-ai-hint={item.posterImageHint}
               />
               <div className="flex-1">
                 <h2 className="text-xl font-bold">{item.title}</h2>
@@ -97,7 +96,7 @@ function SavedItemsList() {
             <CardFooter className="p-4 pt-0 flex justify-between">
               <Button
                 variant="ghost"
-                onClick={() => handleUpdateStatus(item.id)}
+                onClick={() => handleUpdateStatus(item.tmdbId)}
               >
                 Mudar Status
               </Button>
@@ -128,7 +127,7 @@ function SavedItemsList() {
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancelar</AlertDialogCancel>
                       <AlertDialogAction
-                        onClick={() => removeSavedItem(item.id)}
+                        onClick={() => removeSavedItem(item.tmdbId)}
                       >
                         Remover
                       </AlertDialogAction>
@@ -180,7 +179,7 @@ export default function ProfilePage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {likedItems.map((media) => (
-                <MovieCard key={media.id} media={media} />
+                <MovieCard key={media.tmdbId} media={media} />
               ))}
             </div>
           )}
@@ -194,7 +193,7 @@ export default function ProfilePage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {dislikedItems.map((media) => (
-                <MovieCard key={media.id} media={media} />
+                <MovieCard key={media.tmdbId} media={media} />
               ))}
             </div>
           )}
