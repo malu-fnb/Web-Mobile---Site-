@@ -31,7 +31,9 @@ Um site responsivo para **Web e Mobile**, feito com **Next.js + TypeScript**, fo
 
 ## 📂 Print do Site:
 
-<img src="https://github.com/malu-fnb/Portif-lio---Jogo-da-Forca/blob/main/imagem/poertifolio02.png" alt="Habilidades" width="700"/>
-<img src="https://github.com/malu-fnb/Portif-lio---Jogo-da-Forca/blob/main/imagem/poertifolio02.png" alt="Habilidades" width="700"/>
-<img src="https://github.com/malu-fnb/Portif-lio---Jogo-da-Forca/blob/main/imagem/poertifolio02.png" alt="Habilidades" width="700"/>
+<img src="https://github.com/malu-fnb/Web-Mobile---Site-/blob/main/imagem/telaprincipal.png"/>
+<img src="https://github.com/malu-fnb/Web-Mobile---Site-/blob/main/imagem/MOVIECARD.png"/>
+<img src="https://github.com/malu-fnb/Web-Mobile---Site-/blob/main/imagem/MEUPERFIL.png"/>
+<img src="https://github.com/malu-fnb/Web-Mobile---Site-/blob/main/imagem/gostei.png"/>
+<img src="https://github.com/malu-fnb/Web-Mobile---Site-/blob/main/imagem/ngostei.png"/>
 
