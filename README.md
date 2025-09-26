@@ -8,7 +8,7 @@
 
 Um site responsivo para **Web e Mobile**, feito com **Next.js + TypeScript**, focado em **usabilidade**, **design moderno** e **boa performance**.  
 
-🔗 Deploy online: [Clique aqui para acessar](https://web-mobile-site.vercel.app)  
+🔗 Deploy online: [Clique aqui para acessar](https://cine-web-black.vercel.app/)  
 
 ---
 
